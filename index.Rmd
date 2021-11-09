@@ -11,13 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Time tracker index
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
 librarian::shelf(
-  clockify, dplyr, DT, glue, lubridate, readr, here)
+  clockify, dplyr, DT, glue, lubridate, readr, here, quiet = TRUE)
 ```
 
 
-```{r}
+```{r, echo=FALSE, warning=FALSE}
 
 # CHANGE THESE VARIABLES!
 api_txt <- here("../clockify_api_key.txt")

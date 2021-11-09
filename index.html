@@ -181,46 +181,8 @@ pre code {
 
 <div id="time-tracker-index" class="section level2">
 <h2>Time tracker index</h2>
-<pre class="r"><code>librarian::shelf(
-  clockify, dplyr, DT, glue, lubridate, readr, here)</code></pre>
-<pre><code>## 
-##   The &#39;cran_repo&#39; argument in shelf() was not set, so it will use
-##   cran_repo = &#39;https://cran.r-project.org&#39; by default.
-## 
-##   To avoid this message, set the &#39;cran_repo&#39; argument to a CRAN
-##   mirror URL (see https://cran.r-project.org/mirrors.html) or set
-##   &#39;quiet = TRUE&#39;.</code></pre>
-<pre class="r"><code># CHANGE THESE VARIABLES!
-api_txt &lt;- here(&quot;../clockify_api_key.txt&quot;)
-project_name &lt;- &quot;jaws|bren&quot;
-
-# use API key to authenticate
-CLOCKIFY_API_KEY &lt;- readLines(api_txt)</code></pre>
-<pre><code>## Warning in readLines(api_txt): incomplete final line found on &#39;/Users/DeepBlue/
-## Documents/File Folder/UCSB/Fall/211_TeamSci/time_clock/../clockify_api_key.txt&#39;</code></pre>
-<pre class="r"><code>set_api_key(CLOCKIFY_API_KEY)
-
-# get data
-d_projects &lt;- projects() %&gt;% 
-      select(project_id, project_name)
-d_users &lt;- users() %&gt;% 
-      select(user_id, user_name)
-d_times &lt;- time_entries(concise = F) %&gt;% 
-  left_join(
-    d_projects, by = &quot;project_id&quot;) %&gt;% 
-  left_join(
-    d_users, by = &quot;user_id&quot;)
-
-# show table
-d_times %&gt;% 
-  select(
-    user_name, project_name, 
-    time_start, duration, description) %&gt;% 
-  arrange(user_name, project_name, time_start) %&gt;% 
-  datatable() %&gt;%
-  formatRound(columns=c(&#39;duration&#39;), digits=3)</code></pre>
-<div id="htmlwidget-b5752756fd4b7839fafd" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b5752756fd4b7839fafd">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],["Shale","Shale","Shale"],["jaws|bren","jaws|bren","jaws|bren"],["2021-11-02T18:00:00Z","2021-11-04T18:00:00Z","2021-11-08T17:13:37Z"],[120,180,0.183333333333333],["Tuesday meeting","proposal","Clockify setup"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>user_name<\/th>\n      <th>project_name<\/th>\n      <th>time_start<\/th>\n      <th>duration<\/th>\n      <th>description<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\");\n  }"},{"className":"dt-right","targets":4},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
+<div id="htmlwidget-00975953923b1bc23881" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-00975953923b1bc23881">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],["Shale","Shale","Shale"],["jaws|bren","jaws|bren","jaws|bren"],["2021-11-02T18:00:00Z","2021-11-04T18:00:00Z","2021-11-08T17:13:37Z"],[120,180,0.183333333333333],["Tuesday meeting","proposal","Clockify setup"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>user_name<\/th>\n      <th>project_name<\/th>\n      <th>time_start<\/th>\n      <th>duration<\/th>\n      <th>description<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\");\n  }"},{"className":"dt-right","targets":4},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":["options.columnDefs.0.render"],"jsHooks":[]}</script>
 </div>
 
 
