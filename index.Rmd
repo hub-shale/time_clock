@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r, echo=FALSE, warning=FALSE}
+# fancy library read-in
 librarian::shelf(
   clockify, dplyr, DT, glue, lubridate, readr, here, quiet = TRUE)
 ```
