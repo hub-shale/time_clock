@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Time tracker index
+## Welcome to your time tracker index
 
 ```{r, echo=FALSE, warning=FALSE}
 librarian::shelf(
