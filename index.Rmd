@@ -13,6 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r, echo=FALSE, warning=FALSE}
+# get most up to date version of clocify package
+# remove.packages("clockify")
+# remotes::install_github("bbest/clockify")
+
 # fancy library read-in
 librarian::shelf(
   clockify, dplyr, DT, glue, lubridate, readr, here, quiet = TRUE)
@@ -30,23 +34,121 @@ CLOCKIFY_API_KEY <- readLines(api_txt)
 set_api_key(CLOCKIFY_API_KEY)
 
 # get data
-d_projects <- projects() %>% 
-      select(project_id, project_name)
-d_users <- users() %>% 
-      select(user_id, user_name)
-d_times <- time_entries(concise = F) %>% 
-  left_join(
-    d_projects, by = "project_id") %>% 
-  left_join(
-    d_users, by = "user_id")
+d_times <- time_entries_all()
+# table(d_times$project_name) # confirm project_name
+d_times <- d_times %>%
+  filter(
+    project_name == !!project_name) %>%
+  select(
+    task_name, time_start, duration_hrs, 
+    user_name, description) %>% 
+  arrange(task_name, time_start)
 
 # show table
-d_times %>% 
-  select(
-    user_name, project_name, 
-    time_start, duration, description) %>% 
-  arrange(user_name, project_name, time_start) %>% 
-  datatable() %>%
-  formatRound(columns=c('duration'), digits=3)
+# d_times %>% 
+#   select(
+#     user_name, project_name, 
+#     time_start, duration, description) %>% 
+#   arrange(user_name, project_name, time_start) %>% 
+#   datatable() %>%
+#   formatRound(columns=c('duration'), digits=3)
 ```
+
+
+## Project Burndown {.tabset}
+
+### Overall
+
+```{r}
+# plot ALL
+plot_burndown(
+  d_times,
+  beg = as.Date("2021-11-01"), # day before
+  end = as.Date("2021-12-06"), # day after
+  hrs = 40)
+
+# table ALL
+datatable(d_times)
+```
+
+### Define scope/purpose/plan
+
+```{r}
+task <- "Define scope/purpose/plan"
+d_task <- d_times %>% 
+  filter(task_name == !!task)
+plot_burndown(
+  d_task,
+  beg = as.Date("2021-11-01"), # day before
+  end = as.Date("2021-11-03"), # day after
+  hrs = 5)
+
+datatable(d_task)
+```
+
+### Find data and import
+
+```{r}
+task <- "Find data and import"
+d_task <- d_times %>% 
+  filter(task_name == !!task)
+plot_burndown(
+  d_task,
+  beg = as.Date("2021-11-03"), # day before
+  end = as.Date("2021-11-05"), # day after
+  hrs = 5)
+```
+
+### Tidy and transform
+
+```{r}
+task <- "Tidy (clean and combine) and transform"
+d_task <- d_times %>% 
+  filter(task_name == !!task)
+plot_burndown(
+  d_task,
+  beg = as.Date("2021-11-05"), # day before
+  end = as.Date("2021-11-08"), # day after
+  hrs = 5)
+```
+
+### Exploratory visualization
+
+```{r}
+task <- "Exploratory visualization (brainstorming)"
+d_task <- d_times %>% 
+  filter(task_name == !!task)
+plot_burndown(
+  d_task,
+  beg = as.Date("2021-11-08"), # day before
+  end = as.Date("2021-11-19"), # day after
+  hrs = 5)
+```
+
+### Model/refine
+
+```{r}
+task <- "Model/refine"
+d_task <- d_times %>% 
+  filter(task_name == !!task)
+plot_burndown(
+  d_task,
+  beg = as.Date("2021-11-12"), # day before
+  end = as.Date("2021-11-29"), # day after
+  hrs = 10)
+```
+
+### Communicate
+
+```{r}
+task <- "Communicate"
+d_task <- d_times %>% 
+  filter(task_name == !!task)
+plot_burndown(
+  d_task,
+  beg = as.Date("2021-11-15"), # day before
+  end = as.Date("2021-12-06"), # day after
+  hrs = 10)
+```
+
 
